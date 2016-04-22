@@ -48,5 +48,75 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-install ib_qib /usr/sbin/hfi1-psm-compat.cmds start; modprobe -i ib_qib $CMDLINE_OPTS
-remove ib_qib modprobe -r -i ib_qib && /usr/sbin/hfi1-psm-compat.cmds stop
+# Copyright (c) 2014-2015 Intel Corporation. All rights reserved.
+#
+Summary: Intel PSM Libraries
+Name: libpsm2
+Version: 0.7.244
+Release: 1
+License: BSD or GPLv2
+URL: https://github.com/01org/opa-psm2/
+# ERRATA: need to push the tarball upto github for the review for Fedora.
+Source0: https://github.com/01org/opa-psm2/releases/download/10_1/%{name}-%{version}.tar.gz
+
+# The OPA product is supported on x86 64 only:
+ExclusiveArch: x86_64
+BuildRequires: libuuid-devel
+BuildRequires: systemd
+
+%package devel
+Summary: Development files for Intel PSM
+Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: libuuid-devel
+
+%package compat
+Summary: Compat library for Intel PSM
+Requires: %{name}%{?_isa} = %{version}-%{release}
+
+%description
+The PSM Messaging API, or PSM API, is the low-level
+user-level communications interface for the Intel(R) OPA
+family of products. PSM users are enabled with mechanisms
+necessary to implement higher level communications
+interfaces in parallel environments.
+
+%description devel
+Development files for the Intel PSM library
+
+%description compat
+Support for MPIs linked with PSM versions < 2
+
+%prep
+%setup -q -n libpsm2-%{version}
+
+%build
+export CFLAGS="%{optflags}"
+make %{?_smp_mflags}
+
+%install
+%{__make} DESTDIR=$RPM_BUILD_ROOT install
+
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
+
+%files
+%{_libdir}/libpsm2.so.2.1
+%{_libdir}/libpsm2.so.2
+%{_udevrulesdir}/40-psm.rules
+
+%files devel
+%{_libdir}/libpsm2.so
+%{_includedir}/psm2.h
+%{_includedir}/psm2_mq.h
+%{_includedir}/psm2_am.h
+%{_includedir}/hfi1diag
+
+%files compat
+%{_libdir}/psm2-compat/libpsm_infinipath.so.1
+%{_udevrulesdir}/40-psm-compat.rules
+/etc/modprobe.d/libpsm2-compat.conf
+%{_sbindir}/libpsm2-compat.cmds
+
+%changelog
+* Tue Apr 05 2016 Paul Reger <paul.j.reger@intel.com> - 0.7.244
+- Upstream PSM2 source code for Fedora.

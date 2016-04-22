@@ -140,18 +140,18 @@ be used to generate source and binary RPMs using the rpmbuild command with the
 3. Generate distribution tarball
    	$ make dist
 4. Generate source and binary packages
-   	$ rpmbuild -ta hfi1-psm-$PRODUCT-$RELEASE.tar.gz
+   	$ rpmbuild -ta libpsm2-$PRODUCT-$RELEASE.tar.gz
 
 As of this writing (July 21, 2015), this command results in the following
 collection of rpm's and source code rpm's to populate your rpmbuild directory
 tree in your home directory:
 
-RPMS/x86_64/hfi1-psm-0.7-95.x86_64.rpm
-RPMS/x86_64/hfi1-psm-devel-0.7-95.x86_64.rpm
-RPMS/x86_64/hfi1-psm-compat-0.7-95.x86_64.rpm
-RPMS/x86_64/hfi1-psm-compat-devel-0.7-95.x86_64.rpm
-RPMS/x86_64/hfi1-psm-debuginfo-0.7-95.x86_64.rpm
-SRPMS/hfi1-psm-0.7-95.src.rpm
+RPMS/x86_64/-0.7-95.x86_64.rpm
+RPMS/x86_64/libpsm2-devel-0.7-95.x86_64.rpm
+RPMS/x86_64/libpsm2-compat-0.7-95.x86_64.rpm
+RPMS/x86_64/libpsm2-compat-devel-0.7-95.x86_64.rpm
+RPMS/x86_64/libpsm2-debuginfo-0.7-95.x86_64.rpm
+SRPMS/libpsm2-0.7-95.src.rpm
 
 INSTALLING USING MAKEFILE
 -------------------------
