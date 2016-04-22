@@ -116,12 +116,12 @@ nthreads := $(shell echo $$(( `nproc` * 2 )) )
 DISTRO := $(shell . /etc/os-release; echo $$ID)
 
 # By defailt the following two variables have the following values:
-HFI1_PSM_COMPAT_CONF_DIR := /etc
+LIBPSM2_COMPAT_CONF_DIR := /etc
 SPEC_FILE_RELEASE_DIST :=#nothing
 
 ifeq (fedora,$(DISTRO))
 	# On Fedora, we change these two variables to these values:
-	HFI1_PSM_COMPAT_CONF_DIR := /usr/lib
+	LIBPSM2_COMPAT_CONF_DIR := /usr/lib
 	SPEC_FILE_RELEASE_DIST := %{?dist}
 else ifeq (rhel,${DISTRO})
 	# Insert code specific to RHEL here.
@@ -129,7 +129,7 @@ else ifeq (sles,${DISTRO})
 	# Insert code specific to SLES here.
 endif
 
-export 	HFI1_PSM_COMPAT_CONF_DIR
+export 	LIBPSM2_COMPAT_CONF_DIR
 
 # The desired version number comes from the most recent tag starting with "v"
 VERSION := $(shell if [ -e .git ] ; then  git  describe --tags --abbrev=0 --match='v*' | sed -e 's/^v//' -e 's/-/_/'; else echo "version" ; fi)
@@ -157,7 +157,7 @@ endif
 export UDEVDIR
 
 # The DIST variable is a name kernel corresponding to:
-# 1. The name of the directory containing the source code distribution 
+# 1. The name of the directory containing the source code distribution
 #    (see dist: target below).
 # 2. The basename of the filename of the tar file created in the dist:
 #    target.
@@ -229,7 +229,7 @@ specfile:
 			-e 's\@UDEVDIR@\'${UDEVDIR}'\g' \
 			-e 's/@MAJOR@/'${MAJOR}'/g' \
 			-e 's/@MINOR@/'${MINOR}'/g' \
-			-e 's:@HFI1_PSM_COMPAT_CONF_DIR@:'${HFI1_PSM_COMPAT_CONF_DIR}':g' \
+			-e 's:@LIBPSM2_COMPAT_CONF_DIR@:'${LIBPSM2_COMPAT_CONF_DIR}':g' \
 			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g' > \
 		${RPM_NAME}.spec
 

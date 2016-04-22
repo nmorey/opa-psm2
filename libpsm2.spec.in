@@ -56,7 +56,6 @@ Version: @VERSION@
 Release: 1@SPEC_FILE_RELEASE_DIST@
 License: BSD or GPLv2
 URL: https://github.com/01org/opa-psm2/
-# ERRATA: need to push the tarball upto github for the review for Fedora.
 Source0: https://github.com/01org/opa-psm2/releases/download/10_1/%{name}-%{version}.tar.gz
 
 # The OPA product is supported on x86 64 only:
@@ -114,7 +113,7 @@ make %{?_smp_mflags}
 %files compat
 %{_libdir}/psm2-compat/@COMPATLIB@.so.@COMPATMAJOR@
 %{_udevrulesdir}/40-psm-compat.rules
-@HFI1_PSM_COMPAT_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
+@LIBPSM2_COMPAT_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
 %{_sbindir}/@RPM_NAME@-compat.cmds
 
 %changelog
