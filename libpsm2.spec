@@ -52,7 +52,7 @@
 #
 Summary: Intel PSM Libraries
 Name: libpsm2
-Version: 0.7.244
+Version: 10.1.0
 Release: 1
 License: BSD or GPLv2
 URL: https://github.com/01org/opa-psm2/
@@ -118,5 +118,5 @@ make %{?_smp_mflags}
 %{_sbindir}/libpsm2-compat.cmds
 
 %changelog
-* Tue Apr 05 2016 Paul Reger <paul.j.reger@intel.com> - 0.7.244
+* Tue Apr 05 2016 Paul Reger <paul.j.reger@intel.com> - 10.1.0
 - Upstream PSM2 source code for Fedora.
