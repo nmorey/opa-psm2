@@ -52,7 +52,6 @@
 #
 
 RPM_NAME := libpsm2
-BASEVERSION := 0.1
 
 SUBDIRS:= ptl_self ptl_ips ptl_am libuuid opa
 export build_dir := .
@@ -233,7 +232,7 @@ specfile:
 			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g' > \
 		${RPM_NAME}.spec
 
-dist: distclean specfile
+dist: distclean
 	mkdir -p ${DIST}
 	for x in $$(/usr/bin/find .						\
 			-name ".git"                           -prune -o	\
