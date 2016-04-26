@@ -180,6 +180,7 @@ clean:
 distclean: cleanlinks clean
 	rm -f ${RPM_NAME}.spec
 	rm -f ${DIST}.tar.gz
+	rm -fr temp.[0-9]*
 
 .PHONY: symlinks
 symlinks:
