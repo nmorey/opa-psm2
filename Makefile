@@ -116,11 +116,13 @@ DISTRO := $(shell . /etc/os-release; echo $$ID)
 
 # By defailt the following two variables have the following values:
 LIBPSM2_COMPAT_CONF_DIR := /etc
+LIBPSM2_COMPAT_SYM_CONF_DIR := /etc
 SPEC_FILE_RELEASE_DIST :=#nothing
 
 ifeq (fedora,$(DISTRO))
 	# On Fedora, we change these two variables to these values:
-	LIBPSM2_COMPAT_CONF_DIR := %{_prefix}/lib
+	LIBPSM2_COMPAT_CONF_DIR := /usr/lib
+	LIBPSM2_COMPAT_SYM_CONF_DIR := %{_prefix}/lib
 	SPEC_FILE_RELEASE_DIST := %{?dist}
 else ifeq (rhel,${DISTRO})
 	# Insert code specific to RHEL here.
@@ -233,6 +235,7 @@ specfile:
 			-e 's/@MAJOR@/'${MAJOR}'/g' \
 			-e 's/@MINOR@/'${MINOR}'/g' \
 			-e 's:@LIBPSM2_COMPAT_CONF_DIR@:'${LIBPSM2_COMPAT_CONF_DIR}':g' \
+			-e 's:@LIBPSM2_COMPAT_SYM_CONF_DIR@:'${LIBPSM2_COMPAT_SYM_CONF_DIR}':g' \
 			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g'  \
 			-e 's/@DIST_SHA@/'${DIST_SHA}'/g' > \
 		${RPM_NAME}.spec

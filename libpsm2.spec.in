@@ -119,7 +119,7 @@ make %{?_smp_mflags}
 %files compat
 %{_libdir}/psm2-compat
 %{_udevrulesdir}/40-psm-compat.rules
-@LIBPSM2_COMPAT_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
+@LIBPSM2_COMPAT_SYM_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
 %{_sbindir}/@RPM_NAME@-compat.cmds
 
 %changelog
