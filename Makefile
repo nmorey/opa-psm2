@@ -120,7 +120,7 @@ SPEC_FILE_RELEASE_DIST :=#nothing
 
 ifeq (fedora,$(DISTRO))
 	# On Fedora, we change these two variables to these values:
-	LIBPSM2_COMPAT_CONF_DIR := /usr/lib
+	LIBPSM2_COMPAT_CONF_DIR := %{_prefix}/lib
 	SPEC_FILE_RELEASE_DIST := %{?dist}
 else ifeq (rhel,${DISTRO})
 	# Insert code specific to RHEL here.
@@ -140,6 +140,9 @@ RELEASE := $(shell if [ -f RELEASE ]; then cat RELEASE;\
 				sed -e 's/v[0-9.]*-\(.*\)/\1/' -e 's/-/_/' | \
 				sed -e 's/_g.*$$//'; \
 		   else echo "release" ; fi)
+
+DIST_SHA := ${shell if [ -e .git ] ; then git log -n1 --pretty=format:%H ; \
+		else echo DIST_SHA ; fi}
 
 # Concatenated version and release
 VERSION_RELEASE := $(VERSION).$(RELEASE)
@@ -230,7 +233,8 @@ specfile:
 			-e 's/@MAJOR@/'${MAJOR}'/g' \
 			-e 's/@MINOR@/'${MINOR}'/g' \
 			-e 's:@LIBPSM2_COMPAT_CONF_DIR@:'${LIBPSM2_COMPAT_CONF_DIR}':g' \
-			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g' > \
+			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g'  \
+			-e 's/@DIST_SHA@/'${DIST_SHA}'/g' > \
 		${RPM_NAME}.spec
 
 dist: distclean

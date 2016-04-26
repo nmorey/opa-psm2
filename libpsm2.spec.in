@@ -56,7 +56,13 @@ Version: @VERSION@
 Release: 1@SPEC_FILE_RELEASE_DIST@
 License: BSD or GPLv2
 URL: https://github.com/01org/opa-psm2/
-Source0: https://github.com/01org/opa-psm2/releases/download/10_1/%{name}-%{version}.tar.gz
+
+# The tarball can be created by:
+# git clone https://github.com/01org/opa-psm2
+# cd opa-psm2
+# git checkout @DIST_SHA@
+# make dist
+Source0: %{name}-%{version}.tar.gz
 
 # The OPA product is supported on x86 64 only:
 ExclusiveArch: x86_64
@@ -93,7 +99,7 @@ export CFLAGS="%{optflags}"
 make %{?_smp_mflags}
 
 %install
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
@@ -111,7 +117,7 @@ make %{?_smp_mflags}
 %{_includedir}/hfi1diag
 
 %files compat
-%{_libdir}/psm2-compat/@COMPATLIB@.so.@COMPATMAJOR@
+%{_libdir}/psm2-compat
 %{_udevrulesdir}/40-psm-compat.rules
 @LIBPSM2_COMPAT_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
 %{_sbindir}/@RPM_NAME@-compat.cmds
