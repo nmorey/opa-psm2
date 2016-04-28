@@ -68,7 +68,7 @@ all .DEFAULT: ${${COMPATLIB}-objs} ${COMPATLIB}.so.${MAJOR}
 install: all
 	install -m 0644 -D 40-psm-compat.rules ${DESTDIR}$(UDEVDIR)/rules.d/40-psm-compat.rules
 	install -m 0644 -D libpsm2-compat.conf ${DESTDIR}${LIBPSM2_COMPAT_CONF_DIR}/modprobe.d/libpsm2-compat.conf
-	install -m 0755 -D libpsm2-compat.cmds ${DESTDIR}/usr/sbin/libpsm2-compat.cmds
+	install -m 0755 -D libpsm2-compat.cmds ${DESTDIR}/usr/lib/libpsm2/libpsm2-compat.cmds
 	install -D ${COMPATLIB}.so.${MAJOR} ${DESTDIR}${COMPAT_LIB_TARG}/${COMPATLIB}.so.${MAJOR}
 
 %.o: %.c

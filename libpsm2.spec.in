@@ -68,6 +68,7 @@ Source0: %{name}-%{version}.tar.gz
 ExclusiveArch: x86_64
 BuildRequires: libuuid-devel
 BuildRequires: systemd
+BuildRequires: gcc
 
 %package devel
 Summary: Development files for Intel PSM
@@ -77,6 +78,7 @@ Requires: libuuid-devel
 %package compat
 Summary: Compat library for Intel PSM
 Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: systemd-udev
 
 %description
 The PSM Messaging API, or PSM API, is the low-level
@@ -105,8 +107,10 @@ make %{?_smp_mflags}
 %postun -p /sbin/ldconfig
 
 %files
+%license COPYING
 %{_libdir}/@TARGLIB@.so.@MAJOR@.@MINOR@
 %{_libdir}/@TARGLIB@.so.@MAJOR@
+# FIXME: Need to remove 40-psm.rules from the package if possible.
 %{_udevrulesdir}/40-psm.rules
 
 %files devel
@@ -120,7 +124,7 @@ make %{?_smp_mflags}
 %{_libdir}/psm2-compat
 %{_udevrulesdir}/40-psm-compat.rules
 @LIBPSM2_COMPAT_SYM_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
-%{_sbindir}/@RPM_NAME@-compat.cmds
+/usr/lib/libpsm2/@RPM_NAME@-compat.cmds
 
 %changelog
 * Tue Apr 05 2016 Paul Reger <paul.j.reger@intel.com> - @VERSION@

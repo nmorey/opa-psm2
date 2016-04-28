@@ -69,8 +69,10 @@
 #include <fcntl.h>
 #include <malloc.h>
 
+#ifdef PSM_VALGRIND
 #include "valgrind/valgrind.h"
 #include "valgrind/memcheck.h"
+#endif
 
 #include "ipserror.h"
 #include "opa_user.h"
