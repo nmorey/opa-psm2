@@ -118,12 +118,14 @@ DISTRO := $(shell . /etc/os-release; echo $$ID)
 LIBPSM2_COMPAT_CONF_DIR := /etc
 LIBPSM2_COMPAT_SYM_CONF_DIR := /etc
 SPEC_FILE_RELEASE_DIST :=#nothing
+UDEV_40_PSM_RULES := %{_udevrulesdir}/40-psm.rules
 
 ifeq (fedora,$(DISTRO))
 	# On Fedora, we change these two variables to these values:
 	LIBPSM2_COMPAT_CONF_DIR := /usr/lib
 	LIBPSM2_COMPAT_SYM_CONF_DIR := %{_prefix}/lib
 	SPEC_FILE_RELEASE_DIST := %{?dist}
+	UDEV_40_PSM_RULES :=#
 else ifeq (rhel,${DISTRO})
 	# Insert code specific to RHEL here.
 else ifeq (sles,${DISTRO})
@@ -208,7 +210,9 @@ install: all
 	install -m 0644 -D psm2.h ${DESTDIR}/usr/include/psm2.h
 	install -m 0644 -D psm2_mq.h ${DESTDIR}/usr/include/psm2_mq.h
 	install -m 0644 -D psm2_am.h ${DESTDIR}/usr/include/psm2_am.h
+ifneq (fedora,${DISTRO})
 	install -m 0644 -D 40-psm.rules ${DESTDIR}$(UDEVDIR)/rules.d/40-psm.rules
+endif
 	# The following files and dirs were part of the noship rpm:
 	mkdir -p ${DESTDIR}/usr/include/hfi1diag
 	mkdir -p ${DESTDIR}/usr/include/hfi1diag/linux-x86_64
@@ -237,6 +241,7 @@ specfile:
 			-e 's:@LIBPSM2_COMPAT_CONF_DIR@:'${LIBPSM2_COMPAT_CONF_DIR}':g' \
 			-e 's:@LIBPSM2_COMPAT_SYM_CONF_DIR@:'${LIBPSM2_COMPAT_SYM_CONF_DIR}':g' \
 			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g'  \
+			-e 's/@40_PSM_RULES@/'${UDEV_40_PSM_RULES}'/g' \
 			-e 's/@DIST_SHA@/'${DIST_SHA}'/g' > \
 		${RPM_NAME}.spec
 
