@@ -123,7 +123,7 @@ make %{?_smp_mflags}
 %{_libdir}/psm2-compat
 %{_udevrulesdir}/40-psm-compat.rules
 @LIBPSM2_COMPAT_SYM_CONF_DIR@/modprobe.d/@RPM_NAME@-compat.conf
-/usr/lib/libpsm2/@RPM_NAME@-compat.cmds
+%{_prefix}/lib/libpsm2
 
 %changelog
 * Tue Apr 05 2016 Paul Reger <paul.j.reger@intel.com> - @VERSION@
