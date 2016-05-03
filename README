@@ -143,11 +143,11 @@ collection of rpm's and source code rpm's to populate your rpmbuild directory
 tree in your home directory:
 
 
-RPMS/x86_64/libpsm2-compat-0.7.244-1.x86_64.rpm
-RPMS/x86_64/libpsm2-devel-0.7.244-1.x86_64.rpm
-RPMS/x86_64/libpsm2-0.7.244-1.x86_64.rpm
-RPMS/x86_64/libpsm2-debuginfo-0.7.244-1.x86_64.rpm
-SRPMS/libpsm2-0.7.244-1.src.rpm
+RPMS/x86_64/libpsm2-compat-10.2.13-1x86_64.rpm
+RPMS/x86_64/libpsm2-devel-10.2.13-1x86_64.rpm
+RPMS/x86_64/libpsm2-10.2.13-1x86_64.rpm
+RPMS/x86_64/libpsm2-debuginfo-10.2.13-1x86_64.rpm
+SRPMS/libpsm2-10.2.13-1.src.rpm
 
 INSTALLING USING MAKEFILE
 -------------------------

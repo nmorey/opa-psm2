@@ -235,13 +235,13 @@ specfile:
 			-e 's/@RPM_NAME@/'${RPM_NAME}'/g' \
 			-e 's/@COMPATLIB@/'${COMPATLIB}'/g' \
 			-e 's/@COMPATMAJOR@/'${COMPATMAJOR}'/g' \
-			-e 's\@UDEVDIR@\'${UDEVDIR}'\g' \
+			-e 's;@UDEVDIR@;'${UDEVDIR}';g' \
 			-e 's/@MAJOR@/'${MAJOR}'/g' \
 			-e 's/@MINOR@/'${MINOR}'/g' \
 			-e 's:@LIBPSM2_COMPAT_CONF_DIR@:'${LIBPSM2_COMPAT_CONF_DIR}':g' \
 			-e 's:@LIBPSM2_COMPAT_SYM_CONF_DIR@:'${LIBPSM2_COMPAT_SYM_CONF_DIR}':g' \
 			-e 's/@SPEC_FILE_RELEASE_DIST@/'${SPEC_FILE_RELEASE_DIST}'/g'  \
-			-e 's/@40_PSM_RULES@/'${UDEV_40_PSM_RULES}'/g' \
+			-e 's;@40_PSM_RULES@;'${UDEV_40_PSM_RULES}';g' \
 			-e 's/@DIST_SHA@/'${DIST_SHA}'/g' > \
 		${RPM_NAME}.spec
 
