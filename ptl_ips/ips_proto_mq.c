@@ -235,39 +235,6 @@ ips_ptl_mq_eager(struct ips_proto *proto, psm2_mq_req_t req,
 	}
 	msgseq = ipsaddr->msgctl->mq_send_seqnum++;
 
-	/*
-	 * If we can send this message by a single packet, we prefer
-	 * to use short packet, instead of eager paccket.
-	 */
-	if (len <= frag_size) {
-		uint32_t paylen = len & ~0x3;
-		scb = mq_alloc_pkts(proto, 1, 0, 0);
-		psmi_assert(scb);
-
-		ips_scb_opcode(scb) = OPCODE_SHORT;
-		scb->ips_lrh.khdr.kdeth0 = msgseq;
-		ips_scb_hdrdata(scb).u32w1 = len;
-		ips_scb_copy_tag(scb->ips_lrh.tag, tag->tag);
-
-		ips_scb_buffer(scb) = (void *)buf;
-		ips_scb_length(scb) = paylen;
-		if (len > paylen) {
-			mq_copy_tiny((uint32_t *)&ips_scb_hdrdata(scb).u32w0,
-				(uint32_t *)(buf + paylen),
-				len - paylen);
-
-			/* for complete callback */
-			req->send_msgoff = len - paylen;
-		}
-
-		ips_scb_cb(scb) = ips_proto_mq_eager_complete;
-		ips_scb_cb_param(scb) = req;
-		ips_scb_flags(scb) |= IPS_SEND_FLAG_ACKREQ;
-
-		err = ips_mq_send_envelope(proto, flow, scb, PSMI_TRUE);
-		return err;
-	}
-
 	nbytes_left = len;
 	offset = 0;
 	do {
@@ -487,6 +454,8 @@ ips_proto_mq_isend(psm2_mq_t mq, psm2_epaddr_t mepaddr, uint32_t flags,
 
 			/* for complete callback */
 			req->send_msgoff = len - paylen;
+		} else {
+			req->send_msgoff = 0;
 		}
 
 		/*
