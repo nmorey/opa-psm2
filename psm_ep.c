@@ -922,7 +922,7 @@ __psm2_ep_open(psm2_uuid_t const unique_job_key,
 	int i, num_rails = 0;
 	char *uname = "HFI_UNIT";
 	char *pname = "HFI_PORT";
-	char uvalue[4], pvalue[4];
+	char uvalue[6], pvalue[6];
 	int devid_enabled[PTL_MAX_INIT];
 	union psmi_envvar_val devs;
 
@@ -964,8 +964,8 @@ __psm2_ep_open(psm2_uuid_t const unique_job_key,
 
 		/* If multi-rail is used, set the first ep unit/port */
 		if (num_rails > 0) {
-			snprintf(uvalue, 4, "%1d", units[0]);
-			snprintf(pvalue, 4, "%1d", ports[0]);
+			snprintf(uvalue, 6, "%1d", units[0]);
+			snprintf(pvalue, 6, "%1d", ports[0]);
 			setenv(uname, uvalue, 1);
 			setenv(pname, pvalue, 1);
 		}
@@ -999,8 +999,8 @@ __psm2_ep_open(psm2_uuid_t const unique_job_key,
 
 	if (psmi_device_is_enabled(devid_enabled, PTL_DEVID_IPS)) {
 		for (i = 1; i < num_rails; i++) {
-			snprintf(uvalue, 4, "%1d", units[i]);
-			snprintf(pvalue, 4, "%1d", ports[i]);
+			snprintf(uvalue, 6, "%1d", units[i]);
+			snprintf(pvalue, 6, "%1d", ports[i]);
 			setenv(uname, uvalue, 1);
 			setenv(pname, pvalue, 1);
 
