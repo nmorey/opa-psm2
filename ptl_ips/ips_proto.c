@@ -1643,7 +1643,7 @@ scb_dma_send(struct ips_proto *proto, struct ips_flow *flow,
 			break;
 
 		psmi_assert(vec_idx < max_elem);
-		psmi_assert_always((scb->payload_size & 0x3) == 0);
+		psmi_assert_always(((scb->payload_size & 0x3) == 0) || (IPS_NON_DW_MUL_ALLOWED == non_dw_mul_sdma));
 
 		/* Checksum all eager packets */
 		have_cksum = scb->ips_lrh.flags & IPS_SEND_FLAG_PKTCKSUM;

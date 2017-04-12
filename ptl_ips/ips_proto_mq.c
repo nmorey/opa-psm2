@@ -59,7 +59,7 @@
 #include "ips_proto.h"
 #include "ips_proto_internal.h"
 
-static uint32_t non_dw_mul_sdma = 0;
+uint32_t non_dw_mul_sdma = 0;
 
 void
 ips_proto_mq_set_non_dw_mul_sdma(uint32_t mode)

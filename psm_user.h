@@ -125,6 +125,8 @@ int psmi_isinitialized();
 psm2_error_t psmi_poll_internal(psm2_ep_t ep, int poll_amsh);
 psm2_error_t psmi_mq_wait_internal(psm2_mq_req_t *ireq);
 
+extern uint32_t non_dw_mul_sdma;
+
 /*
  * Default setting for Receive thread
  *
