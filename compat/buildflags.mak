@@ -71,7 +71,7 @@ else
 	endif # gcc4
 endif # gcc
 
-BASECFLAGS += $(BASE_FLAGS)
+BASECFLAGS += $(BASE_FLAGS) $(RPM_OPT_FLAGS)
 LDFLAGS += $(BASE_FLAGS)
 ASFLAGS += $(BASE_FLAGS)
 
