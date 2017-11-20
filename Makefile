@@ -198,10 +198,10 @@ export 	LIBPSM2_COMPAT_CONF_DIR
 ifeq (true, $(shell git rev-parse --is-inside-work-tree 2>/dev/null))
 ISGIT := 1 # Cache the result for later
 # Note, we don't define ISGIT if we are not in a git folder
-VERSION := $(shell git describe --tags --abbrev=0 --match='psm-v*' | sed -e 's/^psm-v//' -e 's/-/_/')
+VERSION ?= $(shell git describe --tags --abbrev=0 --match='psm-v*' | sed -e 's/^psm-v//' -e 's/-/_/')
 else
 ISGIT := 0
-VERSION := version
+VERSION ?= version
 endif
 
 # If we have a file called 'rpm_release_extension' (as on github),
@@ -231,7 +231,7 @@ endif
 # is the number of commits since the version tag was planted suffixed by the g<commitid>
 ifndef RELEASE
 RELTAG := "psm-v$(VERSION)"
-RELEASE := $(shell if [ -f rpm_release_extension ]; then cat rpm_release_extension;\
+RELEASE ?= $(shell if [ -f rpm_release_extension ]; then cat rpm_release_extension;\
 		   elif [ $(ISGIT) = 1 ] ; then git rev-list $(RELTAG)..HEAD -- . | wc -l; \
 		   else echo "release" ; fi)
 endif
